@@ -1,0 +1,254 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "013f79805fd45182",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "mqtt",
+        "topic": "mqtt_topic",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8cb16d03296bf446",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "946246fa61afc293",
+                "a6d369ccf6d92f59"
+            ]
+        ]
+    },
+    {
+        "id": "c41b217997b8b209",
+        "type": "file",
+        "z": "f6f2187d.f17ca8",
+        "name": "fisier date",
+        "filename": "path\\date.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "7544655b3cf61998"
+            ]
+        ]
+    },
+    {
+        "id": "946246fa61afc293",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "msg.payload = new Date().toISOString() + \" - \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "c41b217997b8b209",
+                "f59b9e89bbec0504"
+            ]
+        ]
+    },
+    {
+        "id": "a6d369ccf6d92f59",
+        "type": "json",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 510,
+        "y": 420,
+        "wires": [
+            [
+                "1b860a1446d60fa4"
+            ]
+        ]
+    },
+    {
+        "id": "7998618fd6fc8588",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 960,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "1b860a1446d60fa4",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 2",
+        "func": "msg.payload = [{\n    measurement: \"sensor_data\",\n    fields: {\n        temperature: msg.payload.temperature,\n        humidity: msg.payload.humidity\n    }\n}];\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 420,
+        "wires": [
+            [
+                "7998618fd6fc8588"
+            ]
+        ]
+    },
+    {
+        "id": "7544655b3cf61998",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f59b9e89bbec0504",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2735764c592eae89",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "SALUT",
+        "payloadType": "str",
+        "x": 270,
+        "y": 580,
+        "wires": [
+            [
+                "b2781c9587a6b1f9"
+            ]
+        ]
+    },
+    {
+        "id": "b2781c9587a6b1f9",
+        "type": "file",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "filename": "path\\date.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 670,
+        "y": 580,
+        "wires": [
+            [
+                "9897808f3e504809"
+            ]
+        ]
+    },
+    {
+        "id": "9897808f3e504809",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8cb16d03296bf446",
+        "type": "mqtt-broker",
+        "name": "placeholder",
+        "broker": "mqtt_server_address",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

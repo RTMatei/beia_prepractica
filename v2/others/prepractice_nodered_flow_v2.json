@@ -1,0 +1,132 @@
+[
+    {
+        "id": "b6efb16283a7aac1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7c54b46c409d88d3",
+        "type": "mqtt in",
+        "z": "b6efb16283a7aac1",
+        "name": "mqtt",
+        "topic": "mqtt_topic",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "965c172631e86a88",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "87405d53ab05ba2d",
+                "fd62f2ff7703c95c"
+            ]
+        ]
+    },
+    {
+        "id": "87405d53ab05ba2d",
+        "type": "json",
+        "z": "b6efb16283a7aac1",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "a21cca1ff6dc2e51"
+            ]
+        ]
+    },
+    {
+        "id": "7a7ab040669d97ca",
+        "type": "influxdb out",
+        "z": "b6efb16283a7aac1",
+        "influxdb": "",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 960,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a21cca1ff6dc2e51",
+        "type": "function",
+        "z": "b6efb16283a7aac1",
+        "name": "function 2",
+        "func": "msg.payload = [{\n    measurement: \"sensor_data\",\n    fields: {\n        temperature: msg.payload.temperature,\n        humidity: msg.payload.humidity\n    }\n}];\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "7a7ab040669d97ca"
+            ]
+        ]
+    },
+    {
+        "id": "fd62f2ff7703c95c",
+        "type": "debug",
+        "z": "b6efb16283a7aac1",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "965c172631e86a88",
+        "type": "mqtt-broker",
+        "name": "placeholder",
+        "broker": "mqtt_server_address",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
